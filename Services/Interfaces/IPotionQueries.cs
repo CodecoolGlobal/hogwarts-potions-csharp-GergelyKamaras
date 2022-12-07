@@ -7,5 +7,6 @@ namespace HogwartsPotions.Services.Interfaces
     public interface IPotionQueries
     {
         public Task<List<Potion>> GetAllPotions();
+        public Task<List<Potion>> GetPotionsByStudentId(int studentId);
     }
 }

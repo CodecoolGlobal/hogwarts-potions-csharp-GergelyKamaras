@@ -21,6 +21,11 @@ namespace HogwartsPotions.Services.DbQueryServices
             return _db.Potions.ToListAsync();
         }
 
+        public Task<List<Potion>> GetPotionsByStudentId(int studentId)
+        {
+            return _db.Potions.Where(p => p.Student.ID == studentId).ToListAsync();
+        }
+
 
     }
 }
