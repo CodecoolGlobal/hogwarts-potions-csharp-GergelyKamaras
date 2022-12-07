@@ -20,12 +20,19 @@ namespace HogwartsPotions.Services.DbQueryServices
 
         public Task<List<Potion>> GetAllPotions()
         {
-            return _db.Potions.ToListAsync();
+            return _db.Potions.Include(p => p.Student)
+                .Include(p => p.Ingredients)
+                .Include(p => p.Recipe)
+                .ToListAsync();
         }
 
         public Task<List<Potion>> GetPotionsByStudentId(int studentId)
         {
-            return _db.Potions.Where(p => p.Student.ID == studentId).ToListAsync();
+            return _db.Potions.Include(p => p.Student)
+                .Include(p => p.Ingredients)
+                .Include(p => p.Recipe)
+                .Where(p => p.Student.ID == studentId)
+                .ToListAsync();
         }
 
         public Potion AddPotion(PotionDTO potionDTO)
@@ -33,6 +40,16 @@ namespace HogwartsPotions.Services.DbQueryServices
             Potion potion = new Potion();
             potion.Student = _db.Students.First(s => s.ID == potionDTO.StudentId);
             potion.Ingredients = potionDTO.Ingredients;
+
+            // If the ingredient already exists in db replace the potions ingredient with it to avoid duplication
+            potion.Ingredients.ForEach(i =>
+            {
+                if (IsIngredientInDb(i))
+                {
+                    i.ID = _db.Ingredients.First(ingredient => ingredient.Name == i.Name).ID;
+                }
+            });
+            
             potion.BrewingStatus = CalculateBrewingStatus(potion.Ingredients);
 
             if (potion.BrewingStatus == BrewingStatus.Discovery)
@@ -47,7 +64,9 @@ namespace HogwartsPotions.Services.DbQueryServices
 
         public Task<List<Recipe>> GetAllRecipes()
         {
-            return _db.Recipes.ToListAsync();
+            return _db.Recipes.Include(r => r.Ingredients)
+                .Include(r => r.Student)
+                .ToListAsync();
         }
 
         public Task<List<Ingredient>> GetAllIngredients()
@@ -61,7 +80,7 @@ namespace HogwartsPotions.Services.DbQueryServices
             {
                 return BrewingStatus.Brew;
             }
-            else if (_db.Potions.Any(p => p.Ingredients.SequenceEqual(ingredients)))
+            else if (DoesRecipeExist(ingredients))
             {
                 return BrewingStatus.Replica;
             }
@@ -75,6 +94,16 @@ namespace HogwartsPotions.Services.DbQueryServices
         {
             _db.Recipes.Add(new Recipe(potion.Student, potion.Ingredients));
             _db.SaveChanges();
+        }
+
+        private bool DoesRecipeExist(List<Ingredient> ingredients)
+        {
+            return (_db.Recipes.Any() && _db.Recipes.Any(r => r.Ingredients.All(i => ingredients.Contains(i))));
+        }
+
+        private bool IsIngredientInDb(Ingredient ingredient)
+        {
+            return _db.Ingredients.Any(ing => ing.Name == ingredient.Name);
         }
     }
 }
