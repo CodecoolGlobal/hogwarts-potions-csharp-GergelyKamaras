@@ -9,21 +9,16 @@ namespace HogwartsPotions.Controllers
     [ApiController, Route("/potions")]
     public class PotionController : ControllerBase
     {
-
-        public class RoomController : ControllerBase
+        private readonly IPotionQueries _queries;
+        public PotionController(IPotionQueries queries)
         {
-            private readonly IPotionQueries _queries;
+            _queries = queries;
+        }
 
-            public RoomController(IPotionQueries queries)
-            {
-                _queries = queries;
-            }
-
-            [HttpGet]
-            public Task<List<Potion>> GetAllPotions()
-            {
-                return _queries.GetAllPotions();
-            }
+        [HttpGet]
+        public Task<List<Potion>> GetAllPotions()
+        {
+            return _queries.GetAllPotions();
         }
     }
 }
