@@ -26,6 +26,6 @@ namespace HogwartsPotions.Services.DbQueryServices
             return _db.Potions.Where(p => p.Student.ID == studentId).ToListAsync();
         }
 
-
+        public void AddPotion()
     }
 }
