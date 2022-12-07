@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using HogwartsPotions.Data;
 using HogwartsPotions.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace HogwartsPotions.Services.DbQueryServices
     {
         private DbContext _db;
 
-        public RoomQueries(DbContext context)
+        public RoomQueries(HogwartsContext context)
         {
             _db = context;
         }
