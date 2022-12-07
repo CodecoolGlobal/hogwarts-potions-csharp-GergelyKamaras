@@ -11,6 +11,11 @@ namespace HogwartsPotions.Models.Entities
         public int CurrentCapacity => MaxCapacity - Residents.Count;
         public HashSet<Student> Residents { get; set; } = new HashSet<Student>();
 
+        public Room()
+        {
+            
+        }
+
         public Room(int maxCapacity)
         {
             MaxCapacity = maxCapacity;
