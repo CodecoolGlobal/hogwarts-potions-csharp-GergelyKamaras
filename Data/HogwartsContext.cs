@@ -15,5 +15,8 @@ namespace HogwartsPotions.Data
         }
         public DbSet<Student> Students { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Potion> Potions { get; set; }
     }
 }
