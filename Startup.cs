@@ -1,4 +1,6 @@
-using HogwartsPotions.Models;
+using HogwartsPotions.Data;
+using HogwartsPotions.Services.DbQueryServices;
+using HogwartsPotions.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +26,8 @@ namespace HogwartsPotions
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
+
+            services.AddTransient<IRoomQueries, RoomQueries>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

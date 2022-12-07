@@ -2,7 +2,7 @@
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Models.Enums;
 
-namespace HogwartsPotions.Models
+namespace HogwartsPotions.Data
 {
     public static class DbInit
     {
@@ -23,7 +23,7 @@ namespace HogwartsPotions.Models
                 new Student("Draco", HouseType.Slytherin, PetType.None),
                 new Student("Hermione", HouseType.Gryffindor, PetType.Cat)
             });
-            
+
             context.SaveChanges();
 
             context.Rooms.AddRange(new Room[]
@@ -35,10 +35,10 @@ namespace HogwartsPotions.Models
             context.SaveChanges();
 
             Student Harry = context.Students.First(s => s.Name == "Harry");
-            Student Ron= context.Students.First(s => s.Name == "Ron");
-            Student Luna= context.Students.First(s => s.Name == "Luna");
-            Student Draco= context.Students.First(s => s.Name == "Draco");
-            Student Hermione= context.Students.First(s => s.Name == "Hermione");
+            Student Ron = context.Students.First(s => s.Name == "Ron");
+            Student Luna = context.Students.First(s => s.Name == "Luna");
+            Student Draco = context.Students.First(s => s.Name == "Draco");
+            Student Hermione = context.Students.First(s => s.Name == "Hermione");
 
             Room firstRoom = context.Rooms.First();
             firstRoom.Residents.Add(Harry);

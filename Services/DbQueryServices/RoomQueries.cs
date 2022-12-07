@@ -1,22 +1,20 @@
-using System;
+﻿using HogwartsPotions.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HogwartsPotions.Models.Entities;
+using System;
+using HogwartsPotions.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace HogwartsPotions.Models
+namespace HogwartsPotions.Services.DbQueryServices
 {
-    public class HogwartsContext : DbContext
+    public class RoomQueries : IRoomQueries
     {
-        public const int MaxIngredientsForPotions = 5;
+        private DbContext _db;
 
-        public HogwartsContext(DbContextOptions<HogwartsContext> options) : base(options)
+        public RoomQueries(DbContext context)
         {
+            _db = context;
         }
-
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Room> Rooms { get; set; }
-
         public async Task AddRoom(Room room)
         {
             throw new NotImplementedException();
