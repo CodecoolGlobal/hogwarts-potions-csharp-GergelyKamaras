@@ -7,12 +7,13 @@ namespace HogwartsPotions.Models.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-        public int Capacity { get; set; }
+        public int MaxCapacity { get; set; }
+        public int CurrentCapacity => MaxCapacity - Residents.Count;
         public HashSet<Student> Residents { get; set; } = new HashSet<Student>();
 
-        public Room(int capacity)
+        public Room(int maxCapacity)
         {
-            Capacity = capacity;
+            MaxCapacity = maxCapacity;
         }
     }
 }
