@@ -29,6 +29,7 @@ namespace HogwartsPotions
 
             services.AddTransient<IRoomQueries, RoomQueries>();
             services.AddTransient<IPotionQueries, PotionQueries>();
+            services.AddTransient<IStudentQueries, StudentQueries>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
