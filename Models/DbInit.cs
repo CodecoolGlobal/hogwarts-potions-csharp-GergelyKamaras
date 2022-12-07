@@ -4,7 +4,7 @@ using HogwartsPotions.Models.Enums;
 
 namespace HogwartsPotions.Models
 {
-    public class DbInit
+    public static class DbInit
     {
         public static void Init(HogwartsContext context)
         {
@@ -28,9 +28,8 @@ namespace HogwartsPotions.Models
 
             context.Rooms.AddRange(new Room[]
             {
-                new Room(4),
-                new Room(4),
-                new Room(4)
+                new Room(5),
+                new Room(5)
             });
 
             context.SaveChanges();
@@ -46,9 +45,7 @@ namespace HogwartsPotions.Models
             firstRoom.Residents.Add(Ron);
             firstRoom.Residents.Add(Luna);
             firstRoom.Residents.Add(Draco);
-
-            Room secondRoom = context.Rooms.First(r => r.CurrentCapacity > 0);
-            secondRoom.Residents.Add(Hermione);
+            firstRoom.Residents.Add(Hermione);
 
             context.SaveChanges();
         }
