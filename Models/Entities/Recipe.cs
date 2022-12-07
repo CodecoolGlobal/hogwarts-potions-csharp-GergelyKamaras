@@ -7,7 +7,6 @@ namespace HogwartsPotions.Models.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-
         public string Name { get; set; }
         public Student Student { get; set; }
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
@@ -16,9 +15,9 @@ namespace HogwartsPotions.Models.Entities
         {
         }
 
-        public Recipe(string name, Student student, List<Ingredient> ingredients)
+        public Recipe(Student student, List<Ingredient> ingredients)
         {
-            Name = name;
+            Name = $"{student.Name}'s Discovery";
             Student = student;
             Ingredients = ingredients;
         }
