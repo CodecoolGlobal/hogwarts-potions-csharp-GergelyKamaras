@@ -44,7 +44,7 @@ namespace HogwartsPotions.Controllers
         }
 
         [HttpPost]
-        public Potion AddPotion(PotionDTO potionDto)
+        public Potion AddPotion([FromBody] PotionDTO potionDto)
         {
             return _queries.AddPotion(potionDto);
         }
