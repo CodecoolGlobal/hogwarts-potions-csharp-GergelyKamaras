@@ -23,6 +23,20 @@ namespace HogwartsPotions.Controllers
         }
 
         [HttpGet]
+        [Route("recipes")]
+        public Task<List<Recipe>> GetAllRecipes()
+        {
+            return _queries.GetAllRecipes();
+        }
+
+        [HttpGet]
+        [Route("ingredients")]
+        public Task<List<Ingredient>> GetAllIngredients()
+        {
+            return _queries.GetAllIngredients();
+        }
+
+        [HttpGet]
         [Route("{studentId}")]
         public Task<List<Potion>> GetPotionsByStudentId(int studentId)
         {

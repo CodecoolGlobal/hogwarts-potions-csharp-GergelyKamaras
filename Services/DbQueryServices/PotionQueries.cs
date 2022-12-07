@@ -42,7 +42,17 @@ namespace HogwartsPotions.Services.DbQueryServices
             
             _db.Potions.Add(potion);
             _db.SaveChanges();
-            return _db.Potions.First(p => Equals(potion));
+            return potion;
+        }
+
+        public Task<List<Recipe>> GetAllRecipes()
+        {
+            return _db.Recipes.ToListAsync();
+        }
+
+        public Task<List<Ingredient>> GetAllIngredients()
+        {
+            return _db.Ingredients.ToListAsync();
         }
 
         private BrewingStatus CalculateBrewingStatus(List<Ingredient> ingredients)
