@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HogwartsPotions.Controllers
 {
-    [ApiController, Route("/room")]
+    [ApiController, Route("/rooms")]
     public class RoomController : ControllerBase
     {
         private readonly IRoomQueries _queries;
@@ -29,25 +29,25 @@ namespace HogwartsPotions.Controllers
             await _queries.AddRoom(room);
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<Room> GetRoomById(long id)
         {
             return await _queries.GetRoom(id);
         }
 
-        [HttpPut("/{id}")]
+        [HttpPut("{id}")]
         public void UpdateRoomById(long id, [FromBody] Room updatedRoom)
         {
             _queries.UpdateRoom(updatedRoom);
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteRoomById(long id)
         {
             await _queries.DeleteRoom(id);
         }
 
-        [HttpGet("/rat-owners")]
+        [HttpGet("rat-owners")]
         public async Task<List<Room>> GetRoomsForRatOwners()
         {
             return await _queries.GetRoomsForRatOwners();
