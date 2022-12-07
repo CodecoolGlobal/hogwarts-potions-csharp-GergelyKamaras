@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HogwartsPotions.Data;
 using HogwartsPotions.Models.Entities;
+using HogwartsPotions.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HogwartsPotions.Controllers
@@ -9,47 +10,47 @@ namespace HogwartsPotions.Controllers
     [ApiController, Route("/room")]
     public class RoomController : ControllerBase
     {
-        private readonly HogwartsContext _context;
+        private readonly IRoomQueries _queries;
 
-        public RoomController(HogwartsContext context)
+        public RoomController(IRoomQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
 
         [HttpGet]
         public async Task<List<Room>> GetAllRooms()
         {
-            return await _context.GetAllRooms();
+            return await _queries.GetAllRooms();
         }
 
         [HttpPost]
         public async  Task AddRoom([FromBody] Room room)
         {
-            await _context.AddRoom(room);
+            await _queries.AddRoom(room);
         }
 
         [HttpGet("/{id}")]
         public async Task<Room> GetRoomById(long id)
         {
-            return await _context.GetRoom(id);
+            return await _queries.GetRoom(id);
         }
 
         [HttpPut("/{id}")]
         public void UpdateRoomById(long id, [FromBody] Room updatedRoom)
         {
-            _context.Update(updatedRoom);
+            _queries.UpdateRoom(updatedRoom);
         }
 
         [HttpDelete("/{id}")]
         public async Task DeleteRoomById(long id)
         {
-            await _context.DeleteRoom(id);
+            await _queries.DeleteRoom(id);
         }
 
         [HttpGet("/rat-owners")]
         public async Task<List<Room>> GetRoomsForRatOwners()
         {
-            return await _context.GetRoomsForRatOwners();
+            return await _queries.GetRoomsForRatOwners();
         }
     }
 }
