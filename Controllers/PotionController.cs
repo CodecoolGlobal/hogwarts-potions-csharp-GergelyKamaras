@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HogwartsPotions.Models.DTOs;
 using HogwartsPotions.Models.Entities;
@@ -40,9 +41,9 @@ namespace HogwartsPotions.Controllers
         // Brewing
         [HttpPost]
         [Route("brew")]
-        public Potion StartBrewing([FromBody] int studentId)
+        public Potion StartBrewing([FromBody] Student student)
         {
-            return _queries.StartBrewing(studentId);
+            return _queries.StartBrewing(student.ID);
         }
 
         // Misc

@@ -10,7 +10,7 @@ namespace HogwartsPotions.Services.Interfaces
         public Task<List<Potion>> GetAllPotions();
         public Task<List<Potion>> GetPotionsByStudentId(int studentId);
         public Potion AddCompletePotion(PotionDTO potionDTO);
-        public Potion StartBrewing(int studentId);
+        public Potion StartBrewing(long studentId);
         public Task<List<Recipe>> GetAllRecipes();
         public Task<List<Ingredient>> GetAllIngredients();
     }

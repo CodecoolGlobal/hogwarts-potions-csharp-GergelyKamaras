@@ -65,11 +65,14 @@ namespace HogwartsPotions.Services.DbQueryServices
         }
 
         // Brewing
-        public Potion StartBrewing(int studentId)
+        public Potion StartBrewing(long studentId)
         {
             Potion potion = new Potion();
             potion.Student = _db.Students.First(s => s.ID == studentId);
             potion.BrewingStatus = BrewingStatus.Brew;
+
+            _db.Potions.Add(potion);
+            _db.SaveChanges();
 
             return potion;
         }
