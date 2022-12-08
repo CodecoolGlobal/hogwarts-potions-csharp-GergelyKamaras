@@ -53,6 +53,7 @@ namespace HogwartsPotions.Services.DbQueryServices
             }
             
             potion.BrewingStatus = CalculateBrewingStatus(potion.Ingredients);
+            potion.Recipe = AssignRecipeToPotion(potion);
 
             if (potion.BrewingStatus == BrewingStatus.Discovery)
             {
@@ -110,10 +111,24 @@ namespace HogwartsPotions.Services.DbQueryServices
             }
         }
 
-        private void SaveRecipe(Potion potion)
+        private Recipe SaveAndReturnRecipe(Potion potion)
         {
-            _db.Recipes.Add(new Recipe(potion.Student, potion.Ingredients));
+            Recipe recipe = new Recipe(potion.Student, potion.Ingredients);
+            _db.Recipes.Add(recipe);
             _db.SaveChanges();
+            return recipe;
+        }
+
+        private Recipe AssignRecipeToPotion(Potion potion)
+        {
+            if (potion.BrewingStatus == BrewingStatus.Discovery)
+            {
+                return SaveAndReturnRecipe(potion);
+            }
+            else
+            {
+                return _db.Recipes.First(r => r.Ingredients.All(i => potion.Ingredients.Contains(i)));
+            }
         }
 
         private bool DoesRecipeExist(List<Ingredient> ingredients)
