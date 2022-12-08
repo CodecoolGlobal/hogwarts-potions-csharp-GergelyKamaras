@@ -28,6 +28,14 @@ namespace HogwartsPotions.Services.DbQueryServices
                 .ToListAsync();
         }
 
+        public Potion GetPotionById(int id)
+        {
+            return _db.Potions.Include(p => p.Recipe)
+                .Include(p => p.Student)
+                .Include(p => p.Ingredients)
+                .First(p => p.ID == id);
+        }
+
         public Task<List<Potion>> GetPotionsByStudentId(int studentId)
         {
             return _db.Potions.Include(p => p.Student)
@@ -98,6 +106,11 @@ namespace HogwartsPotions.Services.DbQueryServices
             _db.SaveChanges();
 
             return potion;
+        }
+
+        public List<Recipe> GetHelp(List<Ingredient> ingredients)
+        {
+            return _db.Recipes.Where(r => ingredients.All(i => r.Ingredients.Contains(i))).ToList();
         }
 
         // Misc.

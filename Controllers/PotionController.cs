@@ -53,6 +53,14 @@ namespace HogwartsPotions.Controllers
             return _queries.AddIngredient(potionId, ingredient);
         }
 
+        [HttpGet]
+        [Route("{potionId}/help")]
+        public List<Recipe> GetHelp(int potionId)
+        {
+            Potion potion = _queries.GetPotionById(potionId);
+            return _queries.GetHelp(potion.Ingredients);
+        }
+
         // Misc
 
         [HttpGet]
