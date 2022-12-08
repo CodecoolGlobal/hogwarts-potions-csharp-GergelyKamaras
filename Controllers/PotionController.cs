@@ -46,6 +46,13 @@ namespace HogwartsPotions.Controllers
             return _queries.StartBrewing(student.ID);
         }
 
+        [HttpPut]
+        [Route("{potionId}/add")]
+        public Potion AddIngredient(int potionId, [FromBody] Ingredient ingredient)
+        {
+            return _queries.AddIngredient(potionId, ingredient);
+        }
+
         // Misc
 
         [HttpGet]
