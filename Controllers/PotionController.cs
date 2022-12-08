@@ -16,24 +16,12 @@ namespace HogwartsPotions.Controllers
             _queries = queries;
         }
 
+        // Potions
+
         [HttpGet]
         public Task<List<Potion>> GetAllPotions()
         {
             return _queries.GetAllPotions();
-        }
-
-        [HttpGet]
-        [Route("recipes")]
-        public Task<List<Recipe>> GetAllRecipes()
-        {
-            return _queries.GetAllRecipes();
-        }
-
-        [HttpGet]
-        [Route("ingredients")]
-        public Task<List<Ingredient>> GetAllIngredients()
-        {
-            return _queries.GetAllIngredients();
         }
 
         [HttpGet]
@@ -47,6 +35,30 @@ namespace HogwartsPotions.Controllers
         public Potion AddPotion([FromBody] PotionDTO potionDto)
         {
             return _queries.AddCompletePotion(potionDto);
+        }
+
+        // Brewing
+        [HttpPost]
+        [Route("brew")]
+        public Potion StartBrewing([FromBody] int studentId)
+        {
+            return _queries.StartBrewing(studentId);
+        }
+
+        // Misc
+
+        [HttpGet]
+        [Route("recipes")]
+        public Task<List<Recipe>> GetAllRecipes()
+        {
+            return _queries.GetAllRecipes();
+        }
+
+        [HttpGet]
+        [Route("ingredients")]
+        public Task<List<Ingredient>> GetAllIngredients()
+        {
+            return _queries.GetAllIngredients();
         }
     }
 }
