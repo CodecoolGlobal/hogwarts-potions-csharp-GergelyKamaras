@@ -17,7 +17,7 @@ namespace HogwartsPotions.Models.Entities
 
         public Recipe(Student student, List<Ingredient> ingredients)
         {
-            Name = $"{student.Name}'s Discovery";
+            Name = $"{student.Name}'s Discovery #{student.NumberOfDiscoveries}";
             Student = student;
             Ingredients = ingredients;
         }

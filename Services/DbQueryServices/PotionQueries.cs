@@ -42,6 +42,8 @@ namespace HogwartsPotions.Services.DbQueryServices
             Potion potion = new Potion();
             potion.Student = _db.Students.First(s => s.ID == potionDTO.StudentId);
             potion.Ingredients = potionDTO.Ingredients;
+            potion.Student.NumberOfPotions += 1;
+            potion.Name = $"{potion.Student.Name}'s potion #{potion.Student.NumberOfPotions}";
 
             // If the ingredient already exists in db replace the potions ingredient  object reference with it to avoid db duplication
             for (int i = 0; i < potion.Ingredients.Count; i++)
@@ -130,6 +132,7 @@ namespace HogwartsPotions.Services.DbQueryServices
 
         private Recipe SaveAndReturnRecipe(Potion potion)
         {
+            potion.Student.NumberOfDiscoveries += 1;
             Recipe recipe = new Recipe(potion.Student, potion.Ingredients);
             _db.Recipes.Add(recipe);
             _db.SaveChanges();
