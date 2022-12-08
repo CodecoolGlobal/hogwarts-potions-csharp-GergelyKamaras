@@ -67,6 +67,8 @@ namespace HogwartsPotions.Services.DbQueryServices
         {
             Potion potion = new Potion();
             potion.Student = _db.Students.First(s => s.ID == studentId);
+            potion.Student.NumberOfPotions += 1;
+            potion.Name = $"{potion.Student.Name}'s potion #{potion.Student.NumberOfPotions}";
             potion.BrewingStatus = BrewingStatus.Brew;
 
             _db.Potions.Add(potion);
