@@ -18,6 +18,8 @@ namespace HogwartsPotions.Services.DbQueryServices
             _db = context;
         }
 
+        // Potions
+
         public Task<List<Potion>> GetAllPotions()
         {
             return _db.Potions.Include(p => p.Student)
@@ -35,7 +37,7 @@ namespace HogwartsPotions.Services.DbQueryServices
                 .ToListAsync();
         }
 
-        public Potion AddPotion(PotionDTO potionDTO)
+        public Potion AddCompletePotion(PotionDTO potionDTO)
         {
             Potion potion = new Potion();
             potion.Student = _db.Students.First(s => s.ID == potionDTO.StudentId);
@@ -62,6 +64,10 @@ namespace HogwartsPotions.Services.DbQueryServices
             return potion;
         }
 
+        // Brewing
+
+        // Misc.
+
         public Task<List<Recipe>> GetAllRecipes()
         {
             return _db.Recipes.Include(r => r.Ingredients)
@@ -73,6 +79,8 @@ namespace HogwartsPotions.Services.DbQueryServices
         {
             return _db.Ingredients.ToListAsync();
         }
+
+        // Util
 
         private BrewingStatus CalculateBrewingStatus(List<Ingredient> ingredients)
         {
