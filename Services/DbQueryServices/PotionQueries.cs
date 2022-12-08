@@ -41,14 +41,14 @@ namespace HogwartsPotions.Services.DbQueryServices
             potion.Student = _db.Students.First(s => s.ID == potionDTO.StudentId);
             potion.Ingredients = potionDTO.Ingredients;
 
-            // If the ingredient already exists in db replace the potions ingredient with it to avoid duplication
-            potion.Ingredients.ForEach(i =>
+            // If the ingredient already exists in db replace the potions ingredient  object reference with it to avoid db duplication
+            for (int i = 0; i < potion.Ingredients.Count; i++)
             {
-                if (IsIngredientInDb(i))
+                if (IsIngredientInDb(potion.Ingredients[i]))
                 {
-                    i.ID = _db.Ingredients.First(ingredient => ingredient.Name == i.Name).ID;
+                    potion.Ingredients[i] = _db.Ingredients.First(ingredient => ingredient.Name == potion.Ingredients[i].Name);
                 }
-            });
+            }
             
             potion.BrewingStatus = CalculateBrewingStatus(potion.Ingredients);
 
@@ -98,7 +98,7 @@ namespace HogwartsPotions.Services.DbQueryServices
 
         private bool DoesRecipeExist(List<Ingredient> ingredients)
         {
-            return (_db.Recipes.Any() && _db.Recipes.Any(r => r.Ingredients.All(i => ingredients.Contains(i))));
+            return (_db.Recipes.Any(r => r.Ingredients.All(i => ingredients.Contains(i))));
         }
 
         private bool IsIngredientInDb(Ingredient ingredient)
