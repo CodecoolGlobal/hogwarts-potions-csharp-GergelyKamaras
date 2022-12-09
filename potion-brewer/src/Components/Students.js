@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FetchData from "../Data/BackendCommunication.js";
 
-export default function Students() {
+export default function Students(props) {
     const [students, setStudents] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
@@ -27,8 +27,8 @@ export default function Students() {
         return (
             <>
                 <form>
-                    <label for="students">Please select a student: </label>
-                    <select name="students" id="students">
+                    <label htmlFor="students">Please select a student: </label>
+                    <select name="students" id="students" onChange={props.onChange}>
                         {students.map((student) => {
                             return <option key={student.id} value={student.id}>{student.name}</option>
                         })}
