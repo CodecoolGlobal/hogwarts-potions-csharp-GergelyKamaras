@@ -27,6 +27,11 @@ namespace HogwartsPotions
 
             services.AddControllersWithViews();
 
+            services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
+
             services.AddTransient<IRoomQueries, RoomQueries>();
             services.AddTransient<IPotionQueries, PotionQueries>();
             services.AddTransient<IStudentQueries, StudentQueries>();
@@ -47,6 +52,7 @@ namespace HogwartsPotions
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCors("corsapp");
 
             app.UseRouting();
 
