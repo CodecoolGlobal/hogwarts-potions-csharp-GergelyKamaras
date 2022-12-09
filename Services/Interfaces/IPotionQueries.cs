@@ -13,7 +13,7 @@ namespace HogwartsPotions.Services.Interfaces
         public Potion AddCompletePotion(PotionDTO potionDTO);
         public Potion StartBrewing(long studentId);
         public Potion AddIngredient(int potionId, Ingredient ingredient);
-        public List<Recipe> GetHelp(List<Ingredient> ingredients);
+        public List<Recipe> GetHelp(List<Ingredient> currentIngredients);
         public Task<List<Recipe>> GetAllRecipes();
         public Task<List<Ingredient>> GetAllIngredients();
     }

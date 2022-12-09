@@ -53,7 +53,7 @@ namespace HogwartsPotions.Services.DbQueryServices
             potion.Student.NumberOfPotions += 1;
             potion.Name = $"{potion.Student.Name}'s potion #{potion.Student.NumberOfPotions}";
 
-            // If the ingredient already exists in db replace the potions ingredient  object reference with it to avoid db duplication
+            // If the ingredient already exists in db replace the potions ingredient object reference with it to avoid db duplication
             for (int i = 0; i < potion.Ingredients.Count; i++)
             {
                 if (IsIngredientInDb(potion.Ingredients[i]))
@@ -108,9 +108,16 @@ namespace HogwartsPotions.Services.DbQueryServices
             return potion;
         }
 
-        public List<Recipe> GetHelp(List<Ingredient> ingredients)
+        public List<Recipe> GetHelp(List<Ingredient> currentIngredients)
         {
-            return _db.Recipes.Where(r => ingredients.All(i => r.Ingredients.Contains(i))).ToList();
+            List<Recipe> recipes = _db.Recipes.Include(r => r.Ingredients).ToList();
+            foreach (Ingredient ingredient in currentIngredients)
+            {
+                while (recipes.Remove(recipes.Find(r => !r.Ingredients.Contains(ingredient))));
+            }
+
+            return recipes;
+            // return _db.Recipes.Where(r => currentIngredients.All(i => r.Ingredients.Contains(i))).ToList();
         }
 
         // Misc.
