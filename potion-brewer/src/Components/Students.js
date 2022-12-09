@@ -4,7 +4,7 @@ import FetchData from "../Data/BackendCommunication.js";
 export default function Students() {
     const [students, setStudents] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    // FetchData("https://localhost:44390/students").then(d => d)
+
     useEffect(() => {
         async function getStudents () {
             let data = await FetchData("https://localhost:44390/students");
@@ -27,9 +27,12 @@ export default function Students() {
         return (
             <>
                 <form>
-                    {students.map((student) => {
-                        return <p key={student.id}>{student.name}</p>
-                    })}
+                    <label for="students">Please select a student: </label>
+                    <select name="students" id="students">
+                        {students.map((student) => {
+                            return <option key={student.id} value={student.id}>{student.name}</option>
+                        })}
+                    </select>
                 </form>
             </>
         )
