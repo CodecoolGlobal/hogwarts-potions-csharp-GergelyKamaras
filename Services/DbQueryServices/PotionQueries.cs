@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HogwartsPotions.Data;
@@ -90,6 +91,12 @@ namespace HogwartsPotions.Services.DbQueryServices
             Potion potion = _db.Potions.Include(p => p.Student)
                 .Include(p => p.Ingredients)
                 .First(s => s.ID == potionId);
+
+            if (potion.Ingredients.Count == HogwartsContext.MaxIngredientsForPotions)
+            {
+                throw new Exception("Potion already has the maximum amount of ingredients!");
+            }
+
             if (_db.Ingredients.Any(i => i.Name == ingredient.Name))
             {
                 ingredient = _db.Ingredients.First(i => i.Name == ingredient.Name);
